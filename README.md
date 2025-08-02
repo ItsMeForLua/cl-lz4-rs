@@ -20,7 +20,7 @@ The performance gains from using Rust FFI are significant. In our benchmarks, `c
 | **cl-lz4-rs** | **Decompression** | **~1000 MB/s** | **~7x faster** |
 | Chipz (zlib) | Decompression | ~142 MB/s | 1.0x |
 |     |     |     |     |
-| **cl-lz4-rs** | **Compression** | **(Too fast)** | **~12x faster** |
+| **cl-lz4-rs** | **Compression** | **(Too fast to measure)** | **~12x faster** |
 | Salza2 (zlib) | Compression | ~77 MB/s | 1.0x |
 
 *Your results may vary based on hardware*
