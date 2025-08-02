@@ -22,17 +22,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Common Lisp
-        # We'll use the action just to set up Roswell and the Lisp implementation.
-        # We are intentionally not using its qlot/caching features to avoid network issues.
         uses: 40ants/setup-lisp@v4
-        with:
-          asdf-system: cl-lz4-rs
 
       - name: Install Dependencies & Run Tests
         shell: lispsh -eo pipefail {0}
         run: |
           # First, build the Rust native library as defined in the Makefile
           make build
+
+          # Now, install dependencies manually using Roswell.
           echo "--> Installing dependencies with Roswell..."
           ros install cffi
           ros install fiveam
@@ -41,7 +39,9 @@ jobs:
           ros install chipz
           
           echo "--> Running tests..."
+          # Use ros directly to load the system and run the tests.
+          # We explicitly add the current directory to ASDF's central registry.
           ros --non-interactive \
-              --eval "(push *default-pathname-defaults* asdf:*central-registry*)" \
+              --eval "(push #P'./' asdf:*central-registry*)" \
               --eval "(asdf:test-system :cl-lz4-rs-tests)" \
               --quit
