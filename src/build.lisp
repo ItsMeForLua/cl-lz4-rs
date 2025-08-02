@@ -15,7 +15,6 @@
 
 
 (defun get-library-name ()
-  "Get the appropriate library name for the current platform."
   #+windows "lz4_wrapper.dll"
   #+darwin  "liblz4_wrapper.dylib"
   #+(and unix (not darwin)) "liblz4_wrapper.so"
@@ -23,22 +22,18 @@
 
 
 (defun get-system-directory ()
-  "Get the cl-lz4-rs system directory."
   (asdf:system-source-directory :cl-lz4-rs))
 
 
 (defun get-rust-target-dir ()
-  "Get the Rust target directory."
   (merge-pathnames "lz4_wrapper/target/release/" (get-system-directory)))
 
 
 (defun get-library-source-path ()
-  "Get the source path of the built library in Rust target directory."
   (merge-pathnames (get-library-name) (get-rust-target-dir)))
 
 
 (defun get-library-dest-path ()
-  "Get the destination path for the library (system root directory)."
   (merge-pathnames (get-library-name) (get-system-directory)))
 
 
@@ -48,7 +43,6 @@
 
 
 (defun rust-installed-p ()
-  "Check if Rust is installed and available."
   (handler-case
       (progn
         (uiop:run-program
@@ -77,7 +71,6 @@
 
 
 (defun auto-build-disabled-p ()
-  "Checks if the CL_LZ4_RS_NO_AUTO_BUILD environment variable is set."
   (uiop:getenvp "CL_LZ4_RS_NO_AUTO_BUILD"))
 
 
@@ -142,7 +135,6 @@
 
 
 (defun clean-build-artifacts ()
-  "Clean all build artifacts."
   (let ((system-dir (get-system-directory)))
     (format t "~&[INFO] Cleaning build artifacts...~%")
 
@@ -178,7 +170,6 @@
 
 
 (defun build-status ()
-  "Display the current build status."
   (format t "~&--- CL-LZ4-RS Build Status ---~%")
   (format t "System directory:      ~A~%" (get-system-directory))
   (format t "Expected library:      ~A~%" (get-library-dest-path))
