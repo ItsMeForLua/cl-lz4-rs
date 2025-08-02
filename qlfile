@@ -1,0 +1,8 @@
+
+dist quicklisp http://dist.quicklisp.org/dist/quicklisp.txt
+
+ql cffi
+ql fiveam
+ql trivial-benchmark
+ql salza2
+ql chipz

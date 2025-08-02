@@ -1,0 +1,12 @@
+.git
+/lz4_wrapper/target
+target/
+.qlot/
+liblz4_wrapper.so
+liblz4_wrapper.dylib
+lz4_wrapper.dll
+
+# Ignore local user configuration files
+.DS_Store
+*.swp
+*.swo

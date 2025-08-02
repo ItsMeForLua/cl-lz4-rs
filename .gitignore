@@ -1,0 +1,13 @@
+/lz4_wrapper/target/
+/target/
+*.so
+*.dll
+*.dylib
+.qlot/
+*.fasl
+*.lx64fsl
+*.dx64fsl
+*~
+#*#
+.DS_Store
+jenkins_home/
