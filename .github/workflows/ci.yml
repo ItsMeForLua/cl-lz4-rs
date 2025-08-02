@@ -24,7 +24,7 @@ jobs:
       - name: Setup Common Lisp Environment
         uses: 40ants/setup-lisp@v4
         with:
-          asdf-system: cl-lz4
+          asdf-system: cl-lz4-rs
 
       - name: Install Qlot
         run: ros install qlot
