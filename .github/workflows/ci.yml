@@ -21,19 +21,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Common Lisp Environment
-        # This action will automatically detect your qlfile,
-        # run 'qlot install', and cache the .qlot directory.
+      - name: Setup Common Lisp
+        # We'll use the action just to set up Roswell and the Lisp implementation.
+        # We are intentionally not using its qlot/caching features to avoid network issues.
         uses: 40ants/setup-lisp@v4
         with:
           asdf-system: cl-lz4-rs
 
-      - name: Run Tests
-        shell: bash
+      - name: Install Dependencies & Run Tests
+        shell: lispsh -eo pipefail {0}
         run: |
+          # First, build the Rust native library as defined in the Makefile
           make build
+          echo "--> Installing dependencies with Roswell..."
+          ros install cffi
+          ros install fiveam
+          ros install trivial-benchmark
+          ros install salza2
+          ros install chipz
+          
           echo "--> Running tests..."
-          qlot exec ros --non-interactive \
-              --eval '(push *default-pathname-defaults* asdf:*central-registry*)' \
-              --eval "(asdf:test-system :cl-lz4-rs-tests)"
-
+          ros --non-interactive \
+              --eval "(push *default-pathname-defaults* asdf:*central-registry*)" \
+              --eval "(asdf:test-system :cl-lz4-rs-tests)" \
+              --quit
